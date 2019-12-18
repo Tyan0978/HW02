@@ -20,7 +20,7 @@ def find_prime_AP(a,b):
     # find sequences
 
     prime_AP = []
-
+    exist_seq = {}
     for i in primes:
         for j in primes:
             if j <= i:
@@ -29,9 +29,19 @@ def find_prime_AP(a,b):
             d = j - i
             last_n = j + d
             seq_ap = [i, j]
+            if not d in exist_seq:
+                exist_seq[d] = []
+
+            if i in exist_seq[d]:
+                continue
+
             while last_n in primes:
                 seq_ap.append(last_n)
+                exist_seq[d].append(last_n)
                 last_n += d
+            else:
+                exist_seq[d].append(i)
+                exist_seq[d].append(j)
 
             if len(seq_ap) > 2:
                 prime_AP.append(seq_ap)
