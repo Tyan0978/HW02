@@ -4,6 +4,11 @@ def find_prime_AP(a,b):
 
     # find primes in [a,b)
 
+    if type(a) == float:
+        a = int(a+1)
+    if type(b) == float:
+        b = int(b+1)
+
     primes = [i for i in range(a,b)]
     for n in range(a,b):
         if n < 2:
