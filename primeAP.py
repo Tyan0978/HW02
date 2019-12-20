@@ -21,6 +21,7 @@ def find_prime_AP(a,b):
 
     prime_AP = []
     exist_seq = {}
+    longest_len = 0
     for i in primes:
         for j in primes:
             if j <= i:
@@ -45,8 +46,15 @@ def find_prime_AP(a,b):
 
             if len(seq_ap) > 2:
                 prime_AP.append(seq_ap)
+                if len(seq_ap) > longest_len:
+                    longest_len = len(seq_ap)
 
-    return prime_AP
+    longest_seq = []
+    for seq in prime_AP:
+        if len(seq) == longest_len:
+            longest_seq.append(seq)
+
+    return longest_seq
 
 if __name__ == '__main__':
     primeAPs = find_prime_AP(1,40)
