@@ -10,11 +10,11 @@ def get_top_threes(file_in,file_out):
         line = line.strip()
         if '"' in line:
             new_list = line.split('"')
-            name = new_list[1]
+            name = ' '.join(new_list[1].split(', '))
             scores = new_list[2].split(',')[1:]
         elif "'" in line:
             new_list = line.split("'")
-            name = new_list[1]
+            name = ' '.join(new_list[1].split(', '))
             scores = new_list[2].split(',')[1:]
         else:
             new_list = line.split(',')
@@ -22,7 +22,7 @@ def get_top_threes(file_in,file_out):
             scores = new_list[1:]
         students_scores[name] = scores
 
-    # find top 3
+    # find top 3 for every subject
     rank_1, rank_2, rank_3 = [], [], []
     for i in range(len(subjects)):
         first, second, third = ['name',0], ['name',0], ['name',0]
@@ -49,6 +49,8 @@ def get_top_threes(file_in,file_out):
         rank_3.append(','.join(third[:-1]))
 
     print(rank_3)
+
+    # find overall top 3
 
     # write a new file
     file_out.write('rank,%s,overall\n' % ','.join(subjects))
