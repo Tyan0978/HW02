@@ -3,6 +3,26 @@
 
 def get_top_threes(file_in,file_out):
 
+    # sort by last name
+    def sort_lastname(ls):
+        if len(ls) == 1:
+            return ls
+        else:
+            r = []
+            for name in ls:
+                sep = name.split(' ')
+                sep.reverse()
+                r.append(' '.join(sep))
+            r.sort()
+
+            rr = []
+            for name in r:
+                r = name.split(' ')
+                r.reverse()
+                rr.append(' '.join(r))
+
+            return rr
+
     # process file
     subjects = file_in.readline().strip('\n,').split(',')
     students_scores = {}
@@ -49,34 +69,9 @@ def get_top_threes(file_in,file_out):
             else:
                 pass
 
-        # sort last names and append to ranks
-        if len(first[:-1]) > 1:
-            new_l = []
-            for name in first[:-1]:
-                ls = name.split(' ')
-                ls.reverse()
-                new_l.append(' '.join(ls))
-            first = new_l
-            first.sort().append(0)
-        if len(second[:-1]) > 1:
-            new_l = []
-            for name in second[:-1]:
-                ls = name.split(' ')
-                ls.reverse()
-                new_l.append(' '.join(ls))
-            second = new_l
-            second.sort().append(0)
-        if len(third[:-1]) > 1:
-            new_l = []
-            for name in third[:-1]:
-                ls = name.split(' ')
-                ls.reverse()
-                new_l.append(' '.join(ls))
-            third = new_l
-            third.sort().append(0)
-        rank_1.append(','.join(first[:-1]))
-        rank_2.append(','.join(second[:-1]))
-        rank_3.append(','.join(third[:-1]))
+        rank_1.append(', '.join(sort_lastname(first[:-1])))
+        rank_2.append(', '.join(sort_lastname(second[:-1])))
+        rank_3.append(', '.join(sort_lastname(third[:-1])))
 
     # find overall top 3
     oa_1, oa_2, oa_3 = ['name',0], ['name',0], ['name',0]
@@ -100,38 +95,9 @@ def get_top_threes(file_in,file_out):
         else:
             pass
 
-    if len(oa_1[:-1]) > 1:
-        new_l = []
-        for name in oa_1[:-1]:
-            ls = name.split(' ')
-            ls.reverse()
-            new_l.append(' '.join(ls))
-        oa_1 = new_l
-        oa_1.sort().append(0)
-    if len(oa_2[:-1]) > 1:
-        new_l = []
-        for name in oa_2[:-1]:
-            ls = name.split(' ')
-            ls.reverse()
-            new_l.append(' '.join(ls))
-        new_l.sort()
-        for name in new_l:
-            ls = name.split(' ')
-            ls.reverse()
-            #####
-        oa_2.append(0)
-    if len(oa_3[:-1]) > 1:
-        new_l = []
-        for name in oa_3[:-1]:
-            ls = name.split(' ')
-            ls.reverse()
-            new_l.append(' '.join(ls))
-        oa_3 = new_l
-        oa_3.sort().append(0)
-
-    rank_1.append(','.join(oa_1[:-1]))
-    rank_2.append(','.join(oa_2[:-1]))
-    rank_3.append(','.join(oa_3[:-1]))
+    rank_1.append(', '.join(sort_lastname(oa_1[:-1])))
+    rank_2.append(', '.join(sort_lastname(oa_2[:-1])))
+    rank_3.append(', '.join(sort_lastname(oa_3[:-1])))
     print(rank_2)
 
     # write a new file
