@@ -10,24 +10,27 @@ def get_top_threes(file_in,file_out):
         line = line.strip()
         if '"' in line:
             new_list = line.split('"')
-            name = ' '.join(new_list[1].split(', '))
+            name = ' '.join(new_list[1].split(', ')[::-1])
             scores = new_list[2].split(',')[1:]
         elif "'" in line:
             new_list = line.split("'")
-            name = ' '.join(new_list[1].split(', '))
+            name = ' '.join(new_list[1].split(', ')[::-1])
             scores = new_list[2].split(',')[1:]
         else:
             new_list = line.split(',')
             name = new_list[0]
             scores = new_list[1:]
-        students_scores[name] = scores
+        scores_int = []
+        for n in scores:
+            scores_int.append(int(n))
+        students_scores[name] = scores_int
 
     # find top 3 for every subject
     rank_1, rank_2, rank_3 = [], [], []
     for i in range(len(subjects)):
         first, second, third = ['name',0], ['name',0], ['name',0]
-        for key in students_scores.keys():
-            score = int(students_scores[key][i])
+        for key,value in students_scores.items():
+            score = value[i]
             if score > first[-1]:
                 third = second
                 second = first
@@ -48,9 +51,11 @@ def get_top_threes(file_in,file_out):
         rank_2.append(','.join(second[:-1]))
         rank_3.append(','.join(third[:-1]))
 
-    print(rank_3)
+    print(rank_2)
 
     # find overall top 3
+    oa_1, oa_2, oa_3 = ['name',0], ['name',0], ['name',0]
+        #for key,value in students_scores:
 
     # write a new file
     file_out.write('rank,%s,overall\n' % ','.join(subjects))
