@@ -98,10 +98,43 @@ def get_top_threes(file_in,file_out):
     rank_1.append(', '.join(sort_lastname(oa_1[:-1])))
     rank_2.append(', '.join(sort_lastname(oa_2[:-1])))
     rank_3.append(', '.join(sort_lastname(oa_3[:-1])))
-    print(rank_2)
 
     # write a new file
     file_out.write('rank,%s,overall\n' % ','.join(subjects))
+
+    count = {}
+    for i in range(len(subjects)+1):
+        count[i] = 0
+    file_out.write('1')
+    for i in range(len(subjects)+1):
+        if count[i] < 3:
+            if rank_1[i].count(',') > 0:
+                file_out.write(',"%s"' % rank_1[i])
+            else:
+                file_out.write(',%s' % rank_1[i])
+            count[i] += rank_1[i].count(',')+1
+        else:
+            file_out.write(',')
+    file_out.write('\n2')
+    for i in range(len(subjects)+1):
+        if count[i] < 3:
+            if rank_2[i].count(',') > 0:
+                file_out.write(',"%s"' % rank_2[i])
+            else:
+                file_out.write(',%s' % rank_2[i])
+            count[i] += rank_2[i].count(',')+1
+        else:
+            file_out.write(',')
+    file_out.write('\n3')
+    for i in range(len(subjects)+1):
+        if count[i] < 3:
+            if rank_3[i].count(',') > 0:
+                file_out.write(',"%s"' % rank_3[i])
+            else:
+                file_out.write(',%s' % rank_3[i])
+            count[i] += rank_3[i].count(',')+1
+        else:
+            file_out.write(',')
 
 if __name__ == '__main__':
     fin = open('sheet01.csv')
